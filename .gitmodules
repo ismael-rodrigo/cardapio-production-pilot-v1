@@ -1,0 +1,6 @@
+[submodule "cardapio-back"]
+	path = cardapio-back
+	url = https://github.com/ismael-rodrigo/cardapio-back
+[submodule "cardapio-dashboard-vue"]
+	path = cardapio-dashboard-vue
+	url = https://github.com/ismael-rodrigo/cardapio-dashboard-vue

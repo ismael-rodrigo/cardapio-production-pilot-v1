@@ -1,0 +1,47 @@
+version: '3.8'
+
+volumes:
+  db_data:
+
+services:
+  back:
+    build: ./cardapio-back
+
+    command: uvicorn src.core.main:app --host 0.0.0.0
+
+    ports:
+      - 8080:8000
+
+    env_file:
+      - ./cardapio-back/.env
+
+    environment:
+      DATABASE_URL: mongodb://root:admin@mongo:27017/
+
+    depends_on:
+      - "mongo"
+
+
+  front:
+    build: ./cardapio-dashboard-vue
+
+    command: nginx -g "daemon off;"
+
+    ports:
+      - 3000:80
+
+    depends_on:
+      - "back"
+
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    ports:
+    - 27017:27017
+    volumes:
+    - db_data:/var/
+
